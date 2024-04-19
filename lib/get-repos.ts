@@ -4,7 +4,7 @@ const octokit = new Octokit();
 
 export async function getRepos() {
   const response = await octokit.repos.listForUser({
-    username: process.env.NEXT_PUBLIC_GITHUB_USERNAME,
+    username: process.env.NEXT_PUBLIC_GITHUB_USERNAME!,
   });
 
   const repos = response.data.map((repo) => repo.name);
@@ -36,7 +36,7 @@ export async function getRepos() {
 
 export async function getProfile() {
   const response = await octokit.users.getByUsername({
-    username: process.env.NEXT_PUBLIC_GITHUB_USERNAME,
+    username: process.env.NEXT_PUBLIC_GITHUB_USERNAME!,
   });
 
   return {
