@@ -14,15 +14,12 @@ export default async function Home({
     search?: string;
   };
 }) {
-  // `any` for now
-  let repos: any = await getRepos();
+  let repos = await getRepos();
   const { avatar, bio, name, username } = await getProfile();
 
   if (searchParams.search) {
-    // @ts-ignore
     repos = repos.filter((group) =>
-      // @ts-ignore
-      group.some((repo) => repo.toLowerCase().includes(searchParams.search))
+      group.some((repo) => repo.toLowerCase().includes(searchParams.search!))
     );
   }
 
@@ -32,7 +29,6 @@ export default async function Home({
       {searchParams.activateGrid && (
         <CharacterGrid
           unavailable={alphabet.filter(
-            // @ts-ignore
             (char) => !repos.some((group) => group[0][0].toLowerCase() === char)
           )}
         />
@@ -69,7 +65,6 @@ export default async function Home({
               >
                 <p>{char}</p>
               </Link>
-              {/* 3x3 grid */}
               <div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1 w-full">
                 {/* @ts-ignore */}
                 {group.map((repo) => (

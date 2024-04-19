@@ -8,6 +8,9 @@ dependencies:
   '@octokit/rest':
     specifier: ^20.1.0
     version: 20.1.0
+  '@octokit/types':
+    specifier: ^13.4.1
+    version: 13.4.1
   '@radix-ui/react-avatar':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0)

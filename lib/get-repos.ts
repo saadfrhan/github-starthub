@@ -1,35 +1,42 @@
-// get all repositories from github by alphabetical order, then split each same letter repositories into a group and return them as array of arrays
-
 import { Octokit } from "@octokit/rest";
 
 const octokit = new Octokit();
 
 export async function getRepos() {
   const response = await octokit.repos.listForUser({
-    username: "saadfrhan",
+    username: process.env.NEXT_PUBLIC_GITHUB_USERNAME,
   });
 
   const repos = response.data.map((repo) => repo.name);
 
   const sortedRepos = repos.sort((a, b) => a.localeCompare(b));
 
-  const groupedRepos = sortedRepos.reduce((acc, repo) => {
-    const firstLetter = repo[0].toUpperCase();
-    if (!acc[firstLetter]) {
-      acc[firstLetter] = [];
-    }
-    acc[firstLetter].push(repo);
-    return acc;
-  }, {});
+  const groupedRepos = sortedRepos.reduce(
+    (
+      acc: {
+        [key: string]: string[];
+      },
+      repo
+    ) => {
+      const firstLetter = repo[0].toUpperCase();
+
+      if (!acc[firstLetter]) {
+        acc[firstLetter] = [];
+      }
+
+      acc[firstLetter].push(repo);
+
+      return acc;
+    },
+    {}
+  );
 
   return Object.values(groupedRepos);
 }
 
-// get profile picture, fullname and bio from github
-
 export async function getProfile() {
   const response = await octokit.users.getByUsername({
-    username: "saadfrhan",
+    username: process.env.NEXT_PUBLIC_GITHUB_USERNAME,
   });
 
   return {
