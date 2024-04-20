@@ -7,3 +7,4 @@
 - add wallpaper
 - improve the design
 - add social links and share button
+- add segoe-ui font
