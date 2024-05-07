@@ -24,7 +24,7 @@ export default function PaginateButtons({
 
   const { push, refresh } = useRouter();
   return (
-    <div className="flex w-full justify-between">
+    <div className="flex w-full justify-between px-3">
       <Button
         disabled={activePage === 1 || disable.previous}
         onClick={() => {

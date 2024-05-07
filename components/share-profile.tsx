@@ -14,7 +14,7 @@ export default function ShareButton({ url }: { url: string }) {
       }}
       onClick={() => console.log("shared successfully!")}
     >
-      <Button variant="ghost" size="sm">
+      <Button variant="outline" size="sm" className="absolute right-5 top-5">
         Share
       </Button>
     </RWebShare>

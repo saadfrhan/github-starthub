@@ -2,6 +2,7 @@ import CharacterGrid from "@/components/character-grid";
 import PaginateButtons from "@/components/paginate-buttons";
 import Search from "@/components/search";
 import ShareButton from "@/components/share-profile";
+import UsernameInput from "@/components/username-input";
 import { getProfile, getRepos } from "@/lib/get-repos";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,7 +20,10 @@ export default async function Home({
     activePage?: number;
   };
 }) {
-  const _username = searchParams.username || "saadfrhan";
+  const _username = searchParams.username;
+  if (!_username) {
+    return <UsernameInput />;
+  }
   let { groupedRepos: repos, repoCount } = await getRepos(
     _username,
     searchParams.activePage
@@ -45,7 +49,7 @@ export default async function Home({
   }
 
   return (
-    <div className="mx-auto max-w-4xl py-8 space-y-4 min-h-screen">
+    <div className="mx-auto max-w-4xl py-5 space-y-5 md:py-12 min-h-screen">
       <div className="flex flex-col gap-y-2 px-4">
         <Image
           className="w-24 h-24 rounded-full"
@@ -78,7 +82,7 @@ export default async function Home({
       <div className="px-4">
         <Search />
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 px-3">
         {repos.map((group) => {
           const char = alphabet.includes(group[0][0].toLowerCase())
             ? group[0][0].toUpperCase()
