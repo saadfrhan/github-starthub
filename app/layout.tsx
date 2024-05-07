@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import { HydrationOverlay } from "@builder.io/react-hydration-overlay";
 
-const inter = Inter({ subsets: ["latin"] });
+const segoeUI = localFont({
+  src: "./SegoeUI.ttf",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Explore Repositories",
@@ -16,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} dark`}>{children}</body>
+      <HydrationOverlay>
+        <body className={`${segoeUI.className} dark`}>{children}</body>
+      </HydrationOverlay>
     </html>
   );
 }

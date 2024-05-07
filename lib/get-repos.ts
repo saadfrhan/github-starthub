@@ -2,9 +2,12 @@ import { Octokit } from "@octokit/rest";
 
 const octokit = new Octokit();
 
-export async function getRepos() {
+export async function getRepos(username: string, page = 1) {
   const response = await octokit.repos.listForUser({
-    username: process.env.NEXT_PUBLIC_GITHUB_USERNAME!,
+    username,
+    per_page: 30,
+    sort: "full_name",
+    page,
   });
 
   const repos = response.data.map((repo) => repo.name);
@@ -20,23 +23,31 @@ export async function getRepos() {
     ) => {
       const firstLetter = repo[0].toUpperCase();
 
-      if (!acc[firstLetter]) {
-        acc[firstLetter] = [];
+      // If the first letter is a number, use '#' as the key
+      const key = isNaN(Number(firstLetter)) ? firstLetter : "#";
+
+      if (!acc[key]) {
+        acc[key] = [];
       }
 
-      acc[firstLetter].push(repo);
+      acc[key].push(repo);
 
       return acc;
     },
     {}
   );
 
-  return Object.values(groupedRepos);
+  const repoCount = sortedRepos.length;
+
+  return {
+    groupedRepos: Object.values(groupedRepos),
+    repoCount,
+  };
 }
 
-export async function getProfile() {
+export async function getProfile(username: string) {
   const response = await octokit.users.getByUsername({
-    username: process.env.NEXT_PUBLIC_GITHUB_USERNAME!,
+    username,
   });
 
   return {
@@ -44,5 +55,6 @@ export async function getProfile() {
     name: response.data.name,
     bio: response.data.bio,
     username: response.data.login,
+    twitter_username: response.data.twitter_username,
   };
 }

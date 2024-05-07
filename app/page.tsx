@@ -1,8 +1,11 @@
 import CharacterGrid from "@/components/character-grid";
+import PaginateButtons from "@/components/paginate-buttons";
 import Search from "@/components/search";
+import ShareButton from "@/components/share-profile";
 import { getProfile, getRepos } from "@/lib/get-repos";
 import Image from "next/image";
 import Link from "next/link";
+import { BsTwitter } from "react-icons/bs";
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
@@ -12,10 +15,18 @@ export default async function Home({
   searchParams: {
     activateGrid?: string;
     search?: string;
+    username?: string;
+    activePage?: number;
   };
 }) {
-  let repos = await getRepos();
-  const { avatar, bio, name, username } = await getProfile();
+  const _username = searchParams.username || "saadfrhan";
+  let { groupedRepos: repos, repoCount } = await getRepos(
+    _username,
+    searchParams.activePage
+  );
+  const { avatar, bio, name, username, twitter_username } = await getProfile(
+    _username
+  );
 
   if (searchParams.search) {
     repos = repos.filter((group) =>
@@ -23,16 +34,18 @@ export default async function Home({
     );
   }
 
+  if (searchParams.activateGrid) {
+    return (
+      <CharacterGrid
+        unavailable={alphabet.filter(
+          (char) => !repos.some((group) => group[0][0].toLowerCase() === char)
+        )}
+      />
+    );
+  }
+
   return (
-    <div className="mx-auto max-w-4xl py-8  space-y-4 min-h-screen">
-      <Search />
-      {searchParams.activateGrid && (
-        <CharacterGrid
-          unavailable={alphabet.filter(
-            (char) => !repos.some((group) => group[0][0].toLowerCase() === char)
-          )}
-        />
-      )}
+    <div className="mx-auto max-w-4xl py-8 space-y-4 min-h-screen">
       <div className="flex flex-col gap-y-2 px-4">
         <Image
           className="w-24 h-24 rounded-full"
@@ -45,10 +58,27 @@ export default async function Home({
           <h1 className="text-2xl">{name}</h1>
           <p className="text-lg">{username}</p>
           <p className="max-w-xs">{bio}</p>
+          <div className="flex w-full justify-between items-center">
+            {twitter_username && (
+              <div className="flex gap-2 py-2 items-center">
+                <Link
+                  href={`https://twitter.com/${twitter_username}`}
+                  className="flex items-center gap-2 justify-center"
+                  target="_blank"
+                >
+                  <BsTwitter />
+                  <p className="underline">@{twitter_username}</p>
+                </Link>
+              </div>
+            )}
+            <ShareButton url={`https://github.com/${username}`} />
+          </div>
         </div>
       </div>
+      <div className="px-4">
+        <Search />
+      </div>
       <div className="space-y-4">
-        {/* @ts-ignore */}
         {repos.map((group) => {
           const char = alphabet.includes(group[0][0].toLowerCase())
             ? group[0][0].toUpperCase()
@@ -66,7 +96,6 @@ export default async function Home({
                 <p>{char}</p>
               </Link>
               <div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1 w-full">
-                {/* @ts-ignore */}
                 {group.map((repo) => (
                   <Link
                     key={repo}
@@ -82,6 +111,13 @@ export default async function Home({
           );
         })}
       </div>
+      <PaginateButtons
+        activePage={Number(searchParams.activePage) || 1}
+        disable={{
+          previous: searchParams.activePage === 1,
+          next: repoCount < 30,
+        }}
+      />
     </div>
   );
 }

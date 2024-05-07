@@ -1,16 +1,37 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Input } from "./ui/input";
 
 function Search() {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" && window.innerWidth <= 768
+  );
+
+  const current = useMemo(
+    () => new URLSearchParams(Array.from(searchParams.entries())),
+    [searchParams]
+  );
 
   useEffect(() => {
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    typeof window !== "undefined" &&
+      window.addEventListener("resize", () => {
+        setIsMobile(window.innerWidth <= 768);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     function handleKeyDown(event: KeyboardEvent) {
+      if (event.ctrlKey && typeof window === "undefined") {
+        return;
+      }
+
       if (event.key === "Enter") {
         current.set("search", search);
         push(`/?${current.toString()}`);
@@ -30,9 +51,20 @@ function Search() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [push, search, searchParams]);
+  }, [push, search, searchParams, isMobile, current]);
 
-  return null;
+  return isMobile ? (
+    <Input
+      type="text"
+      value={search}
+      onChange={(e) => {
+        setSearch(e.target.value);
+        current.set("search", e.target.value);
+        push(`/?${current.toString()}`);
+      }}
+      placeholder="Search..."
+    />
+  ) : null;
 }
 
 export default Search;

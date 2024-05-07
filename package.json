@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@builder.io/react-hydration-overlay": "^0.0.8",
     "@octokit/rest": "^20.1.0",
     "@octokit/types": "^13.4.1",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -19,6 +20,8 @@
     "next": "14.2.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^5.2.1",
+    "react-web-share": "^2.0.2",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7"
   },
