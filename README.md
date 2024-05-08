@@ -4,9 +4,12 @@
 
 - Fetches data using Octokit.
 - Fetches profile picture, fullname, bio and repositories.
-- Presents repositories in a Windows 10 All Apps screen of fullscreen start menu.
-- Input box less search functionality.
-- Dialpad for going to specific # or a letter grid
+- Presents repositories in a beautiful grid.
+- Input box less search functionality for pcs.
+- Input box search functionality for mobiles.
+- Dialpad for going to specific letter grid or numbers.
+- Twitter username and share profile button.
+- SEO friendly.
 
 ## Todo
 
@@ -16,3 +19,8 @@
 - ~add social links and share button~
 - ~add segoe-ui font~
 - ~home page~
+- skeleton loading
+- filter options
+- repo details
+- refactoring
+- error handling

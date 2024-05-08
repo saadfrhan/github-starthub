@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { HydrationOverlay } from "@builder.io/react-hydration-overlay";
+import { Toaster } from "@/components/ui/sonner";
 
 const segoeUI = localFont({
   src: "./SegoeUI.ttf",
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <HydrationOverlay>
         <body className={`${segoeUI.className} dark`}>{children}</body>
+        <Toaster />
       </HydrationOverlay>
     </html>
   );
