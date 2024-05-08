@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@builder.io/react-hydration-overlay": "^0.0.8",
     "@octokit/rest": "^20.1.0",
     "@octokit/types": "^13.4.1",
     "@radix-ui/react-avatar": "^1.0.4",
