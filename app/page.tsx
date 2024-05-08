@@ -125,7 +125,7 @@ export default async function Home({
                 id={char}
               >
                 <Link
-                  href="/?activateGrid=true"
+                  href={`/?username=${username}&activateGrid=true`}
                   className="text-2xl hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-md flex items-center justify-center w-full max-sm:justify-start max-sm:rounded-none"
                 >
                   <p>{char}</p>
