@@ -35,7 +35,7 @@ export async function generateMetadata({
   const openGraph = avatar ? { images: [avatar] } : {};
   return {
     title: `${name} (${username})`,
-    description: bio && `Explore repositories from ${name} (${username})`,
+    description: bio ?? `Explore repositories from ${name} (${username})`,
     openGraph,
   };
 }
