@@ -24,3 +24,4 @@
 - repo details
 - refactoring
 - error handling
+- two tabs one for pinned and one for all
