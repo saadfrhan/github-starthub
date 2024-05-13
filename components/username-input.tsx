@@ -30,6 +30,7 @@ export default function UsernameInput({ message }: { message?: string }) {
             }
           }}
         />
+        <p>Try my username: 'saadfrhan'</p>
       </div>
     </div>
   );
