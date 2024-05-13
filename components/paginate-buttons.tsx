@@ -30,7 +30,7 @@ export default function PaginateButtons({
         onClick={() => {
           current.set("activePage", (activePage - 1).toString());
           refresh();
-          push(`/?${current.toString()}`);
+          push(`/?${current.toString()}#repos`);
         }}
         size="icon"
       >
@@ -41,7 +41,7 @@ export default function PaginateButtons({
         onClick={() => {
           current.set("activePage", (activePage + 1).toString());
           refresh();
-          push(`/?${current.toString()}`);
+          push(`/?${current.toString()}#repos`);
         }}
         size="icon"
       >

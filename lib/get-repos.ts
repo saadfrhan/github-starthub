@@ -3,7 +3,7 @@ import { RequestError } from "@octokit/types";
 
 const octokit = new Octokit();
 
-export async function getRepos(username: string, page = 1) {
+export async function getRepos(username: string, page = 1, search?: string) {
   try {
     const response = await octokit.repos.listForUser({
       username,
@@ -12,18 +12,34 @@ export async function getRepos(username: string, page = 1) {
       page,
     });
 
-    const repos = response.data.map((repo) => repo.name);
+    // more info, star gazers, fork count, description, langugage
+    const repos = response.data.map((repo) => {
+      return {
+        name: repo.name,
+        stargazers_count: repo.stargazers_count,
+        forks_count: repo.forks_count,
+        description: repo.description,
+        language: repo.language,
+      };
+    });
 
-    const sortedRepos = repos.sort((a, b) => a.localeCompare(b));
+    const sortedRepos = repos.sort((a, b) => a.name.localeCompare(b.name));
 
     const groupedRepos = sortedRepos.reduce(
       (
-        acc: {
-          [key: string]: string[];
-        },
+        acc: Record<
+          string,
+          {
+            name: string;
+            stargazers_count: number | undefined;
+            forks_count: number | undefined;
+            description: string | null;
+            language: string | null | undefined;
+          }[]
+        >,
         repo
       ) => {
-        const firstLetter = repo[0].toUpperCase();
+        const firstLetter = repo.name[0].toLowerCase();
 
         // If the first letter is a number, use '#' as the key
         const key = isNaN(Number(firstLetter)) ? firstLetter : "#";
