@@ -15,6 +15,9 @@ const language_dot_colors: {
   Python: "#3572A5",
   C: "#555555",
   "C++": "#f34b7d",
+  Rust: "#dea584",
+  Shell: "#89e051",
+  Lua: "#000080",
 };
 
 export default function RepoCard({
