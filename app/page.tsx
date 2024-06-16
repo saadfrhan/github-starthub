@@ -65,7 +65,7 @@ export default async function Home({
   }
 
   return (
-    <div className="mx-auto max-w-4xl py-5 space-y-5 md:py-12 min-h-screen">
+    <div className="mx-auto flex max-md:flex-col max-w-7xl py-5 space-y-5 md:py-12 min-h-screen">
       <Close />
       <ProfileCard
         avatar={avatar}
@@ -74,6 +74,7 @@ export default async function Home({
         bio={bio}
         twitter_username={twitter_username}
       />
+      <div className="space-y-4">
       <section className="space-y-2 px-3" id="repos">
         {repos &&
           repos.map((group, index) => {
@@ -89,7 +90,7 @@ export default async function Home({
                 <div className="text-2xl px-4 py-2 flex items-center justify-center w-full max-sm:justify-start">
                   <p>{char}</p>
                 </div>
-                <div className="grid grid-cols-3 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1 w-full">
+                <div className="grid grid-cols-2 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1 w-full">
                   {group.map((repo, index) => (
                     <RepoCard key={index} repo={repo} username={username} />
                   ))}
@@ -98,7 +99,7 @@ export default async function Home({
             );
           })}
       </section>
-      {repoCount && repoCount >= 30 && (
+      {repoCount && (
         <PaginateButtons
           activePage={Number(searchParams.activePage) || 1}
           disable={{
@@ -107,6 +108,7 @@ export default async function Home({
           }}
         />
       )}
+      </div>
     </div>
   );
 }

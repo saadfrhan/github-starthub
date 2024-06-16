@@ -30,17 +30,21 @@ export default function RepoCard({
     language: string | null | undefined;
     stargazers_count: number | undefined;
     forks_count: number | undefined;
+    fork: boolean;
+    updated_at: string | null | undefined;
   };
   username?: string;
 }) {
+
   return (
     <Link
-      className="border hover:bg-accent hover:text-accent-foreground p-4 rounded-md max-sm:w-full flex flex-col justify-start space-y-1"
+      className="border hover:bg-accent hover:text-accent-foreground p-4 rounded-md max-sm:w-full space-y-1"
       href={`https://github.com/${username}/${repo.name}`}
       target="_blank"
       rel="noopener noreferrer"
     >
       <p>{repo.name}</p>
+      {repo.fork && <p className="text-xs">Forked</p>}
       {repo.description && (
         <p
           className="text-xs max-w-xs"
@@ -55,6 +59,8 @@ export default function RepoCard({
           {repo.description}
         </p>
       )}
+      {/* updated at */}
+
       <div className="flex items-center gap-2">
         {repo.language && (
           <div className="flex items-center gap-1 text-xs">
@@ -89,6 +95,14 @@ export default function RepoCard({
               : 0}
           </p>
         </Link>
+        <p className="text-xs">
+        {/* format in this way Updated on Mar 16 */}
+        {repo.updated_at &&
+          `Updated on ${new Date(repo.updated_at).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+          })}`}
+        </p>
       </div>
     </Link>
   );

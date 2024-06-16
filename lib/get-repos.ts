@@ -12,6 +12,7 @@ export async function getRepos(username: string, page = 1, search?: string) {
       page,
     });
 
+
     // more info, star gazers, fork count, description, langugage
     const repos = response.data.map((repo) => {
       return {
@@ -20,6 +21,8 @@ export async function getRepos(username: string, page = 1, search?: string) {
         forks_count: repo.forks_count,
         description: repo.description,
         language: repo.language,
+        fork: repo.fork,
+        updated_at: repo.updated_at,
       };
     });
 
@@ -35,6 +38,8 @@ export async function getRepos(username: string, page = 1, search?: string) {
             forks_count: number | undefined;
             description: string | null;
             language: string | null | undefined;
+            fork: boolean;
+            updated_at: string | null | undefined;
           }[]
         >,
         repo

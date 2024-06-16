@@ -21,13 +21,13 @@ export default function ProfileCard({
     <div className="flex flex-col gap-y-2 px-4">
       {avatar && (
         <Image
-          className="w-24 h-24 rounded-full"
+          className="w-100 h-100 rounded-full"
           src={avatar}
           alt={name ?? `${username}'s avatar`}
           quality={100}
           priority={true}
-          width={96}
-          height={96}
+          width={256}
+          height={256}
         />
       )}
       <div>
