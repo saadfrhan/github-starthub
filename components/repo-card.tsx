@@ -1,25 +1,6 @@
 import { GitFork, StarIcon } from "lucide-react";
 import Link from "next/link";
 
-// a library is needed that provides colors for languages
-const language_dot_colors: {
-  [key: string]: string;
-} = {
-  Dockerfile: "#384d54",
-  JavaScript: "#f1e05a",
-  TypeScript: "#2b7489",
-  Kotlin: "#A97BFF",
-  Svelte: "#ff3e00",
-  HTML: "#e34c26",
-  Go: "#00ADD8",
-  Python: "#3572A5",
-  C: "#555555",
-  "C++": "#f34b7d",
-  Rust: "#dea584",
-  Shell: "#89e051",
-  Lua: "#000080",
-};
-
 export default function RepoCard({
   repo,
   username,
@@ -62,17 +43,7 @@ export default function RepoCard({
       {/* updated at */}
 
       <div className="flex items-center gap-2">
-        {repo.language && (
-          <div className="flex items-center gap-1 text-xs">
-            <div
-              className="w-2 h-2 rounded-full"
-              style={{
-                backgroundColor: language_dot_colors[repo.language] || "#000",
-              }}
-            ></div>
-            <p>{repo.language}</p>
-          </div>
-        )}
+        {repo.language && <p className="text-xs">{repo.language}</p>}
         <Link
           className="flex gap-1 items-center hover:text-primary duration-100"
           href={`https://github.com/${username}/${repo.name}/stargazers`}
